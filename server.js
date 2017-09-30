@@ -48,6 +48,17 @@ app.get('/blogs', function(req, res){
   });
 })
 
+app.post('/blogs', function(req, res){
+  var blog = req.fields;
+  var blogToSave = new Blog(blog);
+  blogToSave.save(function (err, savedBlog) {
+    if (err){
+      return res.send('not saved');
+    }
+    res.send(savedBlog);
+  });
+})
+
 app.get('/blogs/:blogId', function(req, res){
   var blogId = req.params.blogId;
   Blog.findById(blogId, function (err, blog) {
@@ -58,15 +69,14 @@ app.get('/blogs/:blogId', function(req, res){
   });
 })
 
-app.post('/blogs', function(req, res){
-  var blog = req.fields;
-  var blogToSave = new Blog(blog);
-  blogToSave.save(function (err, savedBlog) {
+app.delete('/blogs/:blogId', function(req,res){
+  var blogId = req.params.blogId;
+  Blog.findByIdAndRemove(blogId, function(err, blog){
     if (err){
-      return res.send('not saved');
+      return res.send('error on the delete');
     }
-    res.send(savedBlog);
-  });
+    res.end();
+  })
 })
 
 app.listen(PORT, function(){
