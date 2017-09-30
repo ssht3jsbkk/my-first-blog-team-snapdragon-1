@@ -8,7 +8,6 @@ const PORT = 3000;
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
 
 const blogSchema = {
-  id: Number,
   name: String,
   author: String,
   title: String,
@@ -51,7 +50,7 @@ app.get('/blogs', function(req, res){
 
 app.get('/blogs/:blogId', function(req, res){
   var blogId = req.params.blogId;
-  blogCollection.findOne({id:blogId}, function (err, blog) {
+  blogCollection.findById(blogId, function (err, blog) {
     if (err){
       return res.send('error happened here');
     }
