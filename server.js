@@ -19,21 +19,23 @@ var blogCollection = mongoose.model('blogs', blogSchema);
 
 app.get('/blogs', function(req, res){
   var author = req.query.author;
-  if(author == null){
-    blogCollection.find(function (err, blogs) {
-      if (err){
-        return res.send('error happened here');
-      }
-      res.send(blogs);
-    });
-  }else{
-      blogCollection.find({author:author}, function(err, blogs){
-        if (err){
-          return res.send('error no author');
-        }
-        res.send(blogs);
-      })
+  var title = req.query.title;
+  var filter = null;
+
+  if(author && title) {
+    filter = {author:author, title:title};
+  } else if(author && !title) {
+    filter = {author:author};
+  }else if (title && !author){
+    filter = {title:title};
+  }
+
+  blogCollection.find(filter, function (err, blogs) {
+    if (err){
+      return res.send('error happened here');
     }
+    res.send(blogs);
+  });
 })
 
 app.get('/blogs/:blogId', function(req, res){
