@@ -1,0 +1,13 @@
+Make a blog using APIs we have learnt
+
+create post - read, update, delete posts ?? comment on posts ?
+
+create own database in MongoDB !!
+
+create API that allows C(post)R(get)U(pull)D(delete) operations on it ! (+ PUT putting new object
+in database; + PATCH expect object to exist but remove specific properties)
+
+1. create a schema about what post contains - id, author, title, date, content, genre, tags etc.
+2. CRUD - api = GET /posts, GET /posts/:id
+3.
+4.
