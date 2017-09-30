@@ -20,14 +20,25 @@ var blogCollection = mongoose.model('blogs', blogSchema);
 app.get('/blogs', function(req, res){
   var author = req.query.author;
   var title = req.query.title;
-  var filter = null;
+  var dateStart = req.query.dateStart;
+  var dateEnd = req.query.dateEnd;
 
-  if(author && title) {
-    filter = {author:author, title:title};
-  } else if(author && !title) {
-    filter = {author:author};
-  }else if (title && !author){
-    filter = {title:title};
+  var filter = {};
+  if (author) {
+    filter['author'] = author;
+  }
+  if (title) {
+    filter['title'] = title;
+  }
+  if (dateStart) {
+    filter['date'] = {$gte: dateStart}
+  }
+  if (dateEnd) {
+    if(filter['date']){
+      filter['date']['$lte'] = dateEnd;
+    } else {
+      filter['date'] = {$lte: dateEnd}
+    }
   }
 
   blogCollection.find(filter, function (err, blogs) {
