@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const express = require("express");
-
+const formidable = require("express-formidable");
 
 const app = express();
-
+app.use(formidable());
 const PORT = 3000;
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
 
@@ -14,7 +14,7 @@ const blogSchema = {
   date: Date,
   content: String,
 }
-var blogCollection = mongoose.model('blogs', blogSchema);
+var Blog = mongoose.model('blogs', blogSchema);
 
 app.get('/blogs', function(req, res){
   var author = req.query.author;
@@ -40,7 +40,7 @@ app.get('/blogs', function(req, res){
     }
   }
 
-  blogCollection.find(filter, function (err, blogs) {
+  Blog.find(filter, function (err, blogs) {
     if (err){
       return res.send('error happened here');
     }
@@ -50,11 +50,22 @@ app.get('/blogs', function(req, res){
 
 app.get('/blogs/:blogId', function(req, res){
   var blogId = req.params.blogId;
-  blogCollection.findById(blogId, function (err, blog) {
+  Blog.findById(blogId, function (err, blog) {
     if (err){
       return res.send('error happened here');
     }
     res.send(blog);
+  });
+})
+
+app.post('/blogs', function(req, res){
+  var blog = req.fields;
+  var blogToSave = new Blog(blog);
+  blogToSave.save(function (err, savedBlog) {
+    if (err){
+      return res.send('not saved');
+    }
+    res.send(savedBlog);
   });
 })
 
