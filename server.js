@@ -6,6 +6,9 @@ const app = express();
 app.use(formidable());
 const PORT = 3000;
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
+app.get('/', function(req,res){
+  res.sendFile(__dirname + '/form.html')
+})
 
 const blogSchema = {
   name: String,
