@@ -1,0 +1,23 @@
+obj {
+    "_id" : "59d3b0abb6cf0465a04895fd",
+    "author" : "Captain Hook",
+    "title" : "Hook, Line and Sinker",
+    "date" : "12 November 1879",
+    "content" : "The day I earned my hookah because I'm a Sheesha addict"
+}
+
+{
+  "_id" : "59d3b0e66314ca55f5affad3",
+  "author" : "Lord Potato",
+  "title" : "Smash",
+  "date" : "10 June 2017",
+  "content" : "Think mashed potato"
+}
+
+{
+    "_id" : "59d3b348b6cf0465a0489655",
+    "author" : "Mr Bojangles",
+    "title" : "Bojangle jangle",
+    "date" : "15 January 2017",
+    "content" : "Cats Cats"
+}
