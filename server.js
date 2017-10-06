@@ -11,7 +11,7 @@ const PORT = 3000;
 
 app.use(formidable());
 
-mongoose.connect('mongodb://localhost/test', { useMongoClient: true });
+mongoose.connect('mongodb://localhost/school', { useMongoClient: true });
 
 
 app.use('/', indexRoute);
