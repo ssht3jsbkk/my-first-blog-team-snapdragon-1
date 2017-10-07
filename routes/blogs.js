@@ -40,9 +40,10 @@ router.post('/', function(req, res){
   var blogToSave = new Post(blog);
   blogToSave.save(function (err, savedBlog) {
     if (err){
-      return res.send('not saved');
+      res.send('not saved');
+    } else {
+      res.send(savedBlog);
     }
-    res.send(savedBlog);
   });
 })
 

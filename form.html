@@ -5,27 +5,44 @@
     <title>blogs</title>
   </head>
   <body>
-    <form method="post" action='/blogs'>
+    <form class="form-control">
       <fieldset>
        <legend>Blog information:</legend>
-      <label>Name of Author:</label><input name="author" type="text"><br>
+      <label>Name of Author:</label><input name="author" type="text" class="author"><br>
       <br />
-      <label>Title:</label><input name="title" type="text"><br>
+      <label>Title:</label><input name="title" type="text" class="title"><br>
       <br />
-      <label>Date:</label><input name= "date" type="date"><br>
+      <label>Date:</label><input name= "date" type="date" class="date"><br>
       <br />
-      <label>Content:</label><input name= "content" type="text"<br>
-    
+      <label>Content:</label><input name= "content" type="text" class="content"<br>
+
 
     </form><br >
     <br />
     <br />
-    <button>Add new blog</button>
-    <button>Search for a blog</button>
-    <button>Delete a blog</button>
-
-    </body>
-
-
+    <button onclick="addBlog()">Add new blog</button>
   </body>
+  <script>
+
+  document.getElementsByClassName("form-control").addEventListener("submit", stopSubmit());
+
+  function stopSubmit(event){
+    event.preventDefault();
+  }
+
+  function addBlog() {
+    var author = encodeURIComponent(document.getElementsByClassName("author")[0].value);
+    var title = encodeURIComponent(document.getElementsByClassName("title")[0].value);
+    var date = encodeURIComponent(document.getElementsByClassName("date")[0].value);
+    var content = encodeURIComponent(document.getElementsByClassName("content")[0].value);
+    var parameters = "author=" + author + "&title=" + title + "&date=" + date + "&content=" + content;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/blogs", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhttp.send(parameters);
+   }
+  </script>
+
+
 </html>
