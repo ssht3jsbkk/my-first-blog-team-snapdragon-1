@@ -25,25 +25,6 @@
     <div id="blogs" />
   </body>
   <script>
-
-  function addBlog() {
-    var author = encodeURIComponent(document.getElementsByClassName("author")[0].value);
-    var title = encodeURIComponent(document.getElementsByClassName("title")[0].value);
-    var date = encodeURIComponent(document.getElementsByClassName("date")[0].value);
-    var content = encodeURIComponent(document.getElementsByClassName("content")[0].value);
-    var parameters = "author=" + author + "&title=" + title + "&date=" + date + "&content=" + content;
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/blogs", true);
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        listBlogs();
-      };
-    }
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    xhttp.send(parameters);
-   }
-
   function listBlogs(url='/blogs') {
     var template = "<ul>{{#each blogs}}<li><h2>{{title}}</h2><h2>{{author}}</h2><h2>{{date}}</h2><h2>{{content}}</h2><button onclick=\"deleteBlog('{{_id}}')\">Delete</button></button></li>{{/each}}</ul>";
     var xhttp = new XMLHttpRequest()
@@ -60,6 +41,27 @@
     xhttp.open("GET", url, true);
     xhttp.send();
   }
+
+  function addBlog() {
+    // encodeURIComponent put the document in to a url that can be read
+    var author = encodeURIComponent(document.getElementsByClassName("author")[0].value);
+    var title = encodeURIComponent(document.getElementsByClassName("title")[0].value);
+    var date = encodeURIComponent(document.getElementsByClassName("date")[0].value);
+    var content = encodeURIComponent(document.getElementsByClassName("content")[0].value);
+    var parameters = "author=" + author + "&title=" + title + "&date=" + date + "&content=" + content;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/blogs", true);
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        listBlogs();
+      };
+    }
+    // tells the server the data recieve is a form
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhttp.send(parameters);
+   }
+
 
   function filterBlogs() {
     var filterBy = document.getElementById("filterBy").value;
