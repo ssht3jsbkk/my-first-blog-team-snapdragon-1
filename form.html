@@ -19,7 +19,7 @@
     <br />
     <br />
     <button onclick="addBlog()">Add new blog</button>
-    <button onclick="filterBlogs('author')">Sort by</button><input id ="filterInput"/>
+    <button onclick="filterBlogs()">Sort by</button><select id="filterBy"><option value="author">Author</option><option value="title">Title</option></select><input id ="filterInput"/>
 
   </input/>
     <div id="blogs" />
@@ -61,9 +61,10 @@
     xhttp.send();
   }
 
-  function filterBlogs(filterBy) {
-    var author = encodeURIComponent(document.getElementById("filterInput").value);
-    var parameters = "author=" + author;
+  function filterBlogs() {
+    var filterBy = document.getElementById("filterBy").value;
+    var input = encodeURIComponent(document.getElementById("filterInput").value);
+    var parameters = filterBy + '=' + input;
     var url = "/blogs"+"?"+parameters;
     listBlogs(url);
   }
