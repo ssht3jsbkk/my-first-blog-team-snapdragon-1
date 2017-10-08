@@ -6,9 +6,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js" type="text/javascript"></script>
   </head>
   <body onload="listBlogs()">
-    <form class="form-control">
-      <fieldset>
-       <legend>Blog information:</legend>
+       <h1>Blog information:</h1>
       <label>Name of Author:</label><input name="author" type="text" class="author"><br>
       <br />
       <label>Title:</label><input name="title" type="text" class="title"><br>
@@ -18,18 +16,15 @@
       <label>Content:</label><input name= "content" type="text" class="content"<br>
 
 
-    </form><br >
     <br />
     <br />
     <button onclick="addBlog()">Add new blog</button>
+    <button onclick="filterBlogs('author')">Sort by</button><input id ="filterInput"/>
+
+  </input/>
     <div id="blogs" />
   </body>
   <script>
-  document.getElementsByClassName("form-control").addEventListener("submit", stopSubmit());
-
-  function stopSubmit(event){
-    event.preventDefault();
-  }
 
   function addBlog() {
     var author = encodeURIComponent(document.getElementsByClassName("author")[0].value);
@@ -49,7 +44,7 @@
     xhttp.send(parameters);
    }
 
-  function listBlogs() {
+  function listBlogs(url='/blogs') {
     var template = "<ul>{{#each blogs}}<li><h2>{{title}}</h2><h2>{{author}}</h2><h2>{{date}}</h2><h2>{{content}}</h2></li>{{/each}}</ul>";
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function() {
@@ -62,8 +57,15 @@
       }
     };
 
-    xhttp.open("GET", "/blogs", true);
+    xhttp.open("GET", url, true);
     xhttp.send();
+  }
+
+  function filterBlogs(filterBy) {
+    var author = encodeURIComponent(document.getElementById("filterInput").value);
+    var parameters = "author=" + author;
+    var url = "/blogs"+"?"+parameters;
+    listBlogs(url);
   }
   </script>
 </html>
