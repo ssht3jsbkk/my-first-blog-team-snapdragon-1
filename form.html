@@ -45,7 +45,7 @@
    }
 
   function listBlogs(url='/blogs') {
-    var template = "<ul>{{#each blogs}}<li><h2>{{title}}</h2><h2>{{author}}</h2><h2>{{date}}</h2><h2>{{content}}</h2></li>{{/each}}</ul>";
+    var template = "<ul>{{#each blogs}}<li><h2>{{title}}</h2><h2>{{author}}</h2><h2>{{date}}</h2><h2>{{content}}</h2><button onclick=\"deleteBlog('{{_id}}')\">Delete</button></button></li>{{/each}}</ul>";
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
@@ -68,5 +68,15 @@
     var url = "/blogs"+"?"+parameters;
     listBlogs(url);
   }
+
+  function deleteBlog(id){
+    // add are you sure alter
+    var xhttp = new XMLHttpRequest()
+    xhttp.open("DELETE", "/blogs/"+id, true);
+    xhttp.send();
+
+    listBlogs();
+  }
+
   </script>
 </html>
