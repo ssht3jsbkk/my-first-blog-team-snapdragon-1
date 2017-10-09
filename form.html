@@ -3,36 +3,45 @@
   <head>
     <meta charset="utf-8">
     <title>blogs</title>
+    <!--This link is to the handlebars site-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js" type="text/javascript"></script>
   </head>
+  <!--This event gets triggered at the start so show all the blogs-->
   <body onload="listBlogs()">
        <h1>Blog information:</h1>
-      <label>Name of Author:</label><input name="author" type="text" class="author"><br>
+      <label>Name of Author:</label><input placeholder="Author" name="author" type="text" class="author"><br>
       <br />
-      <label>Title:</label><input name="title" type="text" class="title"><br>
+      <label>Title:</label><input placeholder="Book title" name="title" type="text" class="title"><br>
       <br />
-      <label>Date:</label><input name= "date" type="date" class="date"><br>
+      <label>Date:</label><input placeholder="Date" name= "date" type="date" class="date"><br>
       <br />
-      <label>Content:</label><input name= "content" type="text" class="content"<br>
+      <label>Content:</label><input placeholder="Content" name= "content" type="text" class="content"<br>
 
 
     <br />
     <br />
+    <!-- All the buttons are onClick to the function for the Ajax request-->
     <button onclick="addBlog()">Add new blog</button>
     <button onclick="filterBlogs()">Sort by</button><select id="filterBy"><option value="author">Author</option><option value="title">Title</option></select><input id ="filterInput"/>
     <button onclick="listBlogs()">Show all</button>
   </input/>
+    <!-- This div will contain the blogs-->
     <div id="blogs" />
+
   </body>
   <script>
+  // Set the url to the default route of blogs
   function listBlogs(url='/blogs') {
+    // This sets the template to the information sent back from the server and injects it in to the HTML in a list
     var template = "<ul>{{#each blogs}}<li><h2>{{title}}</h2><h2>{{author}}</h2><h2>{{date}}</h2><h2>{{content}}</h2><button onclick=\"deleteBlog('{{_id}}')\">Delete</button></button></li>{{/each}}</ul>";
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         //parse the blogs
         var blogs = JSON.parse(this.responseText);
+        // takes the raw template and give you back a function that allows you to apply the template to a js object
         var compiledTemplate = Handlebars.compile(template);
+        // This turns the list of blogs into HTML
         var renderedHTML = compiledTemplate({blogs: blogs});
         document.getElementById("blogs").innerHTML = renderedHTML;
       }
@@ -43,11 +52,12 @@
   }
 
   function addBlog() {
-    // encodeURIComponent put the document in to a url that can be read
+    // encodeURIComponent put the document in to a url that can be read, so no spaces or any specail charactors
     var author = encodeURIComponent(document.getElementsByClassName("author")[0].value);
     var title = encodeURIComponent(document.getElementsByClassName("title")[0].value);
     var date = encodeURIComponent(document.getElementsByClassName("date")[0].value);
     var content = encodeURIComponent(document.getElementsByClassName("content")[0].value);
+    // This is building up the query strings
     var parameters = "author=" + author + "&title=" + title + "&date=" + date + "&content=" + content;
 
     var xhttp = new XMLHttpRequest();
@@ -66,13 +76,14 @@
   function filterBlogs() {
     var filterBy = document.getElementById("filterBy").value;
     var input = encodeURIComponent(document.getElementById("filterInput").value);
+  // This bulids up a query string
     var parameters = filterBy + '=' + input;
+  // This adds the query string so request knows where to go to ask the question in the server
     var url = "/blogs"+"?"+parameters;
     listBlogs(url);
   }
 
   function deleteBlog(id){
-    // add are you sure alter
     var xhttp = new XMLHttpRequest()
     xhttp.open("DELETE", "/blogs/"+id, true);
     xhttp.send();
