@@ -75,12 +75,9 @@
 
   function filterBlogs() {
     var filterBy = document.getElementById("filterBy").value;
-    var input = encodeURIComponent(document.getElementById("filterInput").value);
-  // This bulids up a query string
-    var parameters = filterBy + '=' + input;
-  // This adds the query string so request knows where to go to ask the question in the server
-    var url = "/blogs"+"?"+parameters;
-    listBlogs(url);
+    var input = encodeURIComponent(document.getElementById("filterInput").value.trim());
+
+    listBlogs(`/blogs/${filterBy}?${filterBy}=${input}`);
   }
 
   function deleteBlog(id){

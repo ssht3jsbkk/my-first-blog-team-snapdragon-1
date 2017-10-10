@@ -4,6 +4,7 @@ const router = express.Router();
 const Post = require("../models/posts.js");
 
 router.get('/', function(req, res){
+
   var author = req.query.author;
   var title = req.query.title;
   var dateStart = req.query.dateStart;
@@ -29,11 +30,33 @@ router.get('/', function(req, res){
 
   Post.find(filter, function (err, blogs) {
     if (err){
-      return res.send('error hrouterened here');
+      return res.send('error here on filter');
     }
     res.send(blogs);
   });
 })
+
+router.get('/author', function(req, res){
+  var objectValue =  Object.values(req.query)[0];
+
+  Post.find({author: new RegExp('^'+ objectValue +'$','i')}, function (err, blogs) {
+    if (err){
+      return res.send('error here on filter');
+    }
+    res.send(blogs);
+  });
+})
+router.get('/title', function(req, res){
+  var objectValue =  Object.values(req.query)[0];
+
+  Post.find({title: new RegExp('^'+ objectValue +'$','i')}, function (err, blogs) {
+    if (err){
+      return res.send('error here on filter');
+    }
+    res.send(blogs);
+  });
+})
+
 
 router.post('/', function(req, res){
   var blog = req.fields;
