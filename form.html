@@ -85,11 +85,16 @@
 
   function deleteBlog(id){
     var xhttp = new XMLHttpRequest()
-    xhttp.open("DELETE", "/blogs/"+id, true);
-    xhttp.send();
+    var x = confirm("would you like to delete this blog");
+      if(x){
+      xhttp.open("DELETE", "/blogs/"+id, true);
+      xhttp.send();
 
-    listBlogs();
-  }
+      listBlogs();
+    }
+    else return
+    }
+
 
   </script>
 </html>
