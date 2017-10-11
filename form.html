@@ -77,7 +77,7 @@
     var filterBy = document.getElementById("filterBy").value;
     var input = encodeURIComponent(document.getElementById("filterInput").value.trim());
 
-    listBlogs(`/blogs/${filterBy}?${filterBy}=${input}`);
+    listBlogs(`/blogs/filter/?${filterBy}=${input}`);
   }
 
   function deleteBlog(id){

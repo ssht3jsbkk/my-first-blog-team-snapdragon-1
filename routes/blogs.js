@@ -36,27 +36,18 @@ router.get('/', function(req, res){
   });
 })
 
-router.get('/author', function(req, res){
-  var objectValue =  Object.values(req.query)[0];
+router.get('/filter', function(req, res){
+  var this_key = Object.keys(req.query)[0];
+  var push = {};
+  push[this_key] = new RegExp('^'+ Object.values(req.query)[0] +'$','i');
 
-  Post.find({author: new RegExp('^'+ objectValue +'$','i')}, function (err, blogs) {
+  Post.find(push, function (err, blogs) {
     if (err){
       return res.send('error here on filter');
     }
     res.send(blogs);
   });
 })
-router.get('/title', function(req, res){
-  var objectValue =  Object.values(req.query)[0];
-
-  Post.find({title: new RegExp('^'+ objectValue +'$','i')}, function (err, blogs) {
-    if (err){
-      return res.send('error here on filter');
-    }
-    res.send(blogs);
-  });
-})
-
 
 router.post('/', function(req, res){
   var blog = req.fields;
