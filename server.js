@@ -18,12 +18,7 @@ mongoose.connect(config.dburl, { useMongoClient: true });
 app.use('/', indexRoute);
 
 app.use('/blogs', blogsRoute);
-//
-// app.post('/blogs', blogsRoute);
-//
-// app.get('/blogs/:blogId', blogsRoute);
-//
-// app.delete('/blogs/:blogId', blogsRoute);
+
 
 app.listen(PORT, function(){
 console.log("listening on " +PORT)
